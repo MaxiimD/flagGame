@@ -17,7 +17,7 @@ SOLDIER_BOTTOM_Y = 50
 
 WINDOW_HEIGHT = 500
 WINDOW_WIDTH = 1000
-# each square is 20 pixelss
+# each square is 20 pixels
 
 BACKGROUND_COLOR = (34, 139, 34)
 BACKGROUND_NIGHTCOLOR = (0, 0, 0)
@@ -37,3 +37,5 @@ WIN_STATE = 3
 
 MINE = 1
 FLAG = 2
+SOLIDER = 3
+EMPTY = 0
