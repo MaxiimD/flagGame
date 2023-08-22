@@ -10,5 +10,7 @@ def draw_game():
     # Flip the display
     pygame.display.flip()
 
+
 def draw_bushes():
     for i in range(consts.NUM_OF_BUSHES):
+        pass
