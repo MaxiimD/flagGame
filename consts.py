@@ -1,7 +1,7 @@
 NUM_OF_BUSHES = 20
 BUSH_IMG = "grass.png"
 
-WELCOME_MSG = "w"
+WELCOME_MSG = "wcg"
 
 GAME_GRID_ROW = 25
 GAME_GRID_COL = 50
