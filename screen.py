@@ -1,7 +1,6 @@
 import random
 import consts
 import pygame
-import turtle
 
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
@@ -14,7 +13,9 @@ def draw_game():
 
 def draw_Night():
     screen.fill(consts.BACKGROUND_NIGHTCOLOR)
-    # Flip the displayy
+    for i in range(consts.WINDOW_WIDTH):
+        for k in range(consts.WINDOW_HEIGHT):
+            pygame.draw.rect(screen,consts.BACKGROUND_COLOR,(1,k,i,1) ,width=1)
     pygame.display.flip()
 
 
