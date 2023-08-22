@@ -1,6 +1,9 @@
 import random
 import consts
 import pygame
+import soldier
+
+import game_field
 
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
@@ -8,67 +11,62 @@ screen = pygame.display.set_mode(
 
 def draw_game():
     screen.fill(consts.BACKGROUND_COLOR)
-    # Flip the displayt
+    draw_bushes()
+    draw_soldier()
+    # Flip the display
     pygame.display.flip()
 
 
-def draw_Night():
-    screen.fill(consts.BACKGROUND_NIGHTCOLOR)
-    for i in range(consts.WINDOW_WIDTH):
-        for k in range(consts.WINDOW_HEIGHT):
-            pygame.draw.rect(screen,consts.BACKGROUND_COLOR,(1,k,i,1) ,width=1)
-    pygame.display.flip()
+def updated_game():
+    draw_soldier()
+    pygame.display.update()
 
 
-def create_bushes(BUSH_IMG):
-    bush = pygame.image.load(BUSH_IMG)
+def draw_bushes():
+    bush = pygame.image.load(consts.BUSH_IMG)
     sized_bush = pygame.transform.scale(bush, (
         consts.BUSH_WIDTH, consts.BUSH_HEIGHT))
-    bush_box = pygame.Surface(
-        (consts.BUSH_HEIGHT, consts.BUSH_HEIGHT), )
-    bush_box.fill(consts.BACKGROUND_COLOR)
-
-    return sized_bush
-
-
-def draw_bushes(bush):
     for i in range(consts.NUM_OF_BUSHES):
-        rotated_bush_rect = bush.get_rect(
-            rnd=(random.randint(0, 1000), random.randint(0, 500)))
-        screen.blit(bush, rotated_bush_rect)
+        x = random.randint(0, consts.WINDOW_WIDTH)
+        y = random.randint(0, consts.WINDOW_HEIGHT)
+        screen.blit(sized_bush, (x, y))
 
 
-def create_mine(MINE_IMG):
-    mine = pygame.image.load(MINE_IMG)
+def draw_soldier():
+    soldierimg = pygame.image.load(consts.SOLDIER_IMG)
+    sized_soldier = pygame.transform.scale(soldierimg, (
+        40, 80))
+    screen.blit(sized_soldier,
+                ((MARGIN + WIDTH) * soldier.location[0] + MARGIN, (MARGIN + HEIGHT) * soldier.location[1] + MARGIN))
+
+
+def draw_flag():
+    flagimg = pygame.image.load(consts.FLAG_IMG)
+    sized_flag = pygame.transform.scale(flagimg, (
+        40, 80))
+    screen.blit(sized_flag,
+                ((MARGIN + WIDTH) * soldier.location[0] + MARGIN, (MARGIN + HEIGHT) * soldier.location[1] + MARGIN))
+
+
+# This sets the WIDTH and HEIGHT of each grid location
+WIDTH = 20
+HEIGHT = 20
+
+# This sets the margin between each cell
+MARGIN = 1
+
+
+def visualize_grid():
+    mine = pygame.image.load(consts.MINE_IMG)
     sized_mine = pygame.transform.scale(mine, (
-        consts.MINE_WIDTH, consts.MINE_HEIGHT))
-    mine_box = pygame.Surface(
-        (consts.MINE_WIDTH, consts.MINE_HEIGHT), )
-    mine_box.fill(consts.BACKGROUND_COLOR)
-
-    return sized_mine
-
-
-def draw_mine(mine):
-    for i in range(consts.NUM_OF_MINES):
-        rotated_bush_rect = mine.get_rect(
-            rnd=(random.randint(0, 1000), random.randint(0, 500)))
-        screen.blit(mine, rotated_bush_rect)
-
-
-def create_soldier(SOLDIER_IMG):
-    soldier = pygame.image.load(SOLDIER_IMG)
-    sized_soldier = pygame.transform.scale(soldier, (
-        consts.SOLDIER_WIDTH, consts.SOLDIER_HEIGHT))
-    soldier_box = pygame.Surface(
-        (consts.SOLDIER_WIDTH, consts.SOLDIER_HEIGHT), )
-    soldier_box.fill(consts.BACKGROUND_COLOR)
-    soldier_box.blit(sized_soldier, consts.SOLDIER_START_LOCATION)
-
-    return sized_soldier
-
-
-def draw_soldier(soldier):
-    rotated_soldier_rect = soldier.get_rect(
-        topleft=(consts.SOLDIER_BOTTOM_Y, consts.SOLDIER_BOTTOM_X))
-    screen.blit(soldier, rotated_soldier_rect)
+        20, 20))
+    screen.fill((0, 0, 0))
+    for row in range(consts.GAME_GRID_ROW):
+        for column in range(consts.GAME_GRID_COL):
+            color = (255, 255, 255)
+            pygame.draw.rect(screen, color,
+                             [(MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN, WIDTH, HEIGHT])
+            if game_field.game_grid[row][column] == consts.MINE:
+                screen.blit(sized_mine, ((MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN))
+    draw_soldier()
+    pygame.display.flip()

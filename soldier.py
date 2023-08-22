@@ -1,8 +1,7 @@
+import consts
 
-SOLDIER_START_LOCATION = [0, 0]
-SOLDIER_IMG = "soldier.png"
-SOLDIER_BOTTOM_X = 0
-SOLDIER_BOTTOM_Y = 50
+location = consts.SOLDIER_START_LOCATION
+
 
 
 

@@ -2,6 +2,7 @@ import consts
 import pygame
 import screen
 import game_field
+import soldier
 
 state = {
     "is_window_open": True,
@@ -11,11 +12,12 @@ state = {
 
 
 def main():
-    # pygame.init()
+    pygame.init()
     game_field.create()
-    print_mat(game_field.game_grid)
-    # while state["is_window_open"]:
-    #     handle_user_events()
+    screen.draw_game()
+    while state["is_window_open"]:
+        handle_user_events()
+        screen.draw_game()
 
 
 def handle_user_events():
@@ -24,13 +26,13 @@ def handle_user_events():
             state["is_window_open"] = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                pass
+                soldier.location[1] -= 1
             if event.key == pygame.K_DOWN:
-                pass
+                soldier.location[1] += 1
             if event.key == pygame.K_LEFT:
-                pass
+                soldier.location[0] -= 1
             if event.key == pygame.K_RIGHT:
-                pass
+                soldier.location[0] += 1
             if event.key == pygame.K_RETURN:
                 pass
 

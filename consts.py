@@ -1,7 +1,7 @@
 NUM_OF_BUSHES = 20
 BUSH_IMG = "grass.png"
-BUSH_HEIGHT = 2
-BUSH_WIDTH = 2
+BUSH_HEIGHT = 40
+BUSH_WIDTH = 40
 
 WELCOME_MSG = "wcg"
 
@@ -15,8 +15,9 @@ SOLDIER_IMG = "soldier.png"
 SOLDIER_BOTTOM_X = 0
 SOLDIER_BOTTOM_Y = 50
 
-WINDOW_HEIGHT = 500
-WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 526
+
+WINDOW_WIDTH = 1051
 # each square is 20 pixels
 
 BACKGROUND_COLOR = (34, 139, 34)
@@ -39,3 +40,10 @@ MINE = 1
 FLAG = 2
 SOLIDER = 3
 EMPTY = 0
+
+# This sets the WIDTH and HEIGHT of each grid location
+WIDTH = 20
+HEIGHT = 20
+
+# This sets the margin between each cell
+MARGIN = 1
