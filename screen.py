@@ -8,7 +8,7 @@ screen = pygame.display.set_mode(
 
 def draw_game():
     screen.fill(consts.BACKGROUND_COLOR)
-    # Flip the display
+    # Flip the displayt
     pygame.display.flip()
 
 
