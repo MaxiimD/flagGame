@@ -14,7 +14,7 @@ def draw_game():
 
 def draw_Night():
     screen.fill(consts.BACKGROUND_NIGHTCOLOR)
-    # Flip the display
+    # Flip the displayy
     pygame.display.flip()
 
 
