@@ -9,17 +9,34 @@ screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
 
 
-def draw_game():
+def draw_game(game_state):
     screen.fill(consts.BACKGROUND_COLOR)
     draw_bushes()
     draw_soldier()
+    draw_flag()
+    if game_state["state"] == consts.LOSE_STATE:
+        visualize_grid()
+        draw_lose_message()
+    elif game_state["state"] == consts.WIN_STATE:
+        draw_win_message()
     # Flip the display
     pygame.display.flip()
 
 
-def updated_game():
-    draw_soldier()
-    pygame.display.update()
+def draw_lose_message():
+    draw_message(consts.LOSE_MESSAGE, consts.LOSE_FONT_SIZE,
+                 consts.LOSE_COLOR, consts.LOSE_LOCATION)
+
+
+def draw_win_message():
+    draw_message(consts.WIN_MESSAGE, consts.WIN_FONT_SIZE,
+                 consts.WIN_COLOR, consts.WIN_LOCATION)
+
+
+def draw_message(message, font_size, color, location):
+    font = pygame.font.SysFont(consts.FONT_NAME, font_size)
+    text_img = font.render(message, True, color)
+    screen.blit(text_img, location)
 
 
 def create_bushes_locations():
@@ -47,18 +64,24 @@ def draw_soldier():
 
 
 def draw_flag():
-    flagimg = pygame.image.load(consts.FLAG_IMG)
-    sized_flag = pygame.transform.scale(flagimg, (
-        40, 80))
+    flag_img = pygame.image.load(consts.FLAG_IMG)
+    sized_flag = pygame.transform.scale(flag_img, (
+        consts.SQUARE_WIDTH * consts.FLAG_WIDTH, consts.SQUARE_HEIGHT * consts.FLAG_HEIGHT))
     screen.blit(sized_flag,
-                ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * soldier.location[0] + consts.SQUARE_MARGIN,
-                 (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * soldier.location[1] + consts.SQUARE_MARGIN))
+                ((consts.WINDOW_WIDTH - sized_flag.get_width()), (consts.WINDOW_HEIGHT - sized_flag.get_height())))
+
+
+def draw_mines():
+    mine = pygame.image.load(consts.MINE_IMG)
+    sized_mine = pygame.transform.scale(mine, (
+        consts.SQUARE_WIDTH * consts.MINE_WIDTH, consts.SQUARE_HEIGHT * consts.MINE_HEIGHT))
+    for location in consts.mine_locations:
+        screen.blit(sized_mine,
+                    ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * location[0] + consts.SQUARE_MARGIN,
+                     (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * location[1] + consts.SQUARE_MARGIN))
 
 
 def visualize_grid():
-    mine = pygame.image.load(consts.MINE_IMG)
-    sized_mine = pygame.transform.scale(mine, (
-        20, 20))
     screen.fill((0, 0, 0))
     for row in range(consts.GAME_GRID_ROW):
         for column in range(consts.GAME_GRID_COL):
@@ -67,8 +90,6 @@ def visualize_grid():
                              [(consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * column + consts.SQUARE_MARGIN,
                               (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * row + consts.SQUARE_MARGIN,
                               consts.SQUARE_WIDTH, consts.SQUARE_HEIGHT])
-            if game_field.game_grid[row][column] == consts.MINE:
-                screen.blit(sized_mine, ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * column + consts.SQUARE_MARGIN,
-                                         (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * row + consts.SQUARE_MARGIN))
+    draw_mines()
     draw_soldier()
     pygame.display.flip()

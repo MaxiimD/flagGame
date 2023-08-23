@@ -15,15 +15,14 @@ SOLDIER_IMG = "soldier.png"
 SOLDIER_BOTTOM_X = 0
 SOLDIER_BOTTOM_Y = 50
 
-# This sets the WIDTH and HEIGHT of each grid location
+# This sets the WIDTH and HEIGHT of each grid location (in pixels)
 SQUARE_WIDTH = 20
 SQUARE_HEIGHT = 20
-# This sets the margin between each cell
+# This sets the margin between each cell(in pixels)
 SQUARE_MARGIN = 1
-# 526
+# set the window dimensions based on the squares
 WINDOW_HEIGHT = SQUARE_HEIGHT * GAME_GRID_ROW + GAME_GRID_ROW * SQUARE_MARGIN + SQUARE_MARGIN
 WINDOW_WIDTH = SQUARE_WIDTH * GAME_GRID_COL + GAME_GRID_COL * SQUARE_MARGIN + SQUARE_MARGIN
-# each square is 20 pixels
 
 BACKGROUND_COLOR = (34, 139, 34)
 BACKGROUND_NIGHTCOLOR = (0, 0, 0)
@@ -46,4 +45,19 @@ FLAG = 2
 SOLIDER = 3
 EMPTY = 0
 
+# saves the bush x,y cords
 bush_locations = []
+# saves each mine's location in the grid
+mine_locations = []
+
+FONT_NAME = "Calibri"
+LOSE_MESSAGE = "You Lost!"
+LOSE_FONT_SIZE = int(0.15 * WINDOW_WIDTH)
+LOSE_COLOR = (89, 89, 89)
+LOSE_LOCATION = \
+    (0.2 * WINDOW_WIDTH, WINDOW_HEIGHT / 2 - (LOSE_FONT_SIZE / 2))
+WIN_MESSAGE = "You Won!"
+WIN_FONT_SIZE = LOSE_FONT_SIZE
+WIN_COLOR = (89, 89, 89)
+WIN_LOCATION = \
+    (0.2 * WINDOW_WIDTH, WINDOW_HEIGHT / 2 - (WIN_FONT_SIZE / 2))
