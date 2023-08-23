@@ -22,22 +22,28 @@ def updated_game():
     pygame.display.update()
 
 
+def create_bushes_locations():
+    for i in range(consts.NUM_OF_BUSHES):
+        x = random.randint(0, consts.WINDOW_WIDTH)
+        y = random.randint(0, consts.WINDOW_HEIGHT)
+        consts.bush_locations.append((x, y))
+
+
 def draw_bushes():
     bush = pygame.image.load(consts.BUSH_IMG)
     sized_bush = pygame.transform.scale(bush, (
         consts.BUSH_WIDTH, consts.BUSH_HEIGHT))
-    for i in range(consts.NUM_OF_BUSHES):
-        x = random.randint(0, consts.WINDOW_WIDTH)
-        y = random.randint(0, consts.WINDOW_HEIGHT)
-        screen.blit(sized_bush, (x, y))
+    for bush in consts.bush_locations:
+        screen.blit(sized_bush, bush)
 
 
 def draw_soldier():
-    soldierimg = pygame.image.load(consts.SOLDIER_IMG)
-    sized_soldier = pygame.transform.scale(soldierimg, (
+    soldier_img = pygame.image.load(consts.SOLDIER_IMG)
+    sized_soldier = pygame.transform.scale(soldier_img, (
         40, 80))
     screen.blit(sized_soldier,
-                ((MARGIN + WIDTH) * soldier.location[0] + MARGIN, (MARGIN + HEIGHT) * soldier.location[1] + MARGIN))
+                ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * soldier.location[0] + consts.SQUARE_MARGIN,
+                 (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * soldier.location[1] + consts.SQUARE_MARGIN))
 
 
 def draw_flag():
@@ -45,15 +51,8 @@ def draw_flag():
     sized_flag = pygame.transform.scale(flagimg, (
         40, 80))
     screen.blit(sized_flag,
-                ((MARGIN + WIDTH) * soldier.location[0] + MARGIN, (MARGIN + HEIGHT) * soldier.location[1] + MARGIN))
-
-
-# This sets the WIDTH and HEIGHT of each grid location
-WIDTH = 20
-HEIGHT = 20
-
-# This sets the margin between each cell
-MARGIN = 1
+                ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * soldier.location[0] + consts.SQUARE_MARGIN,
+                 (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * soldier.location[1] + consts.SQUARE_MARGIN))
 
 
 def visualize_grid():
@@ -65,8 +64,11 @@ def visualize_grid():
         for column in range(consts.GAME_GRID_COL):
             color = (255, 255, 255)
             pygame.draw.rect(screen, color,
-                             [(MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN, WIDTH, HEIGHT])
+                             [(consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * column + consts.SQUARE_MARGIN,
+                              (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * row + consts.SQUARE_MARGIN,
+                              consts.SQUARE_WIDTH, consts.SQUARE_HEIGHT])
             if game_field.game_grid[row][column] == consts.MINE:
-                screen.blit(sized_mine, ((MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN))
+                screen.blit(sized_mine, ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * column + consts.SQUARE_MARGIN,
+                                         (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * row + consts.SQUARE_MARGIN))
     draw_soldier()
     pygame.display.flip()

@@ -15,9 +15,14 @@ SOLDIER_IMG = "soldier.png"
 SOLDIER_BOTTOM_X = 0
 SOLDIER_BOTTOM_Y = 50
 
-WINDOW_HEIGHT = 526
-
-WINDOW_WIDTH = 1051
+# This sets the WIDTH and HEIGHT of each grid location
+SQUARE_WIDTH = 20
+SQUARE_HEIGHT = 20
+# This sets the margin between each cell
+SQUARE_MARGIN = 1
+# 526
+WINDOW_HEIGHT = SQUARE_HEIGHT * GAME_GRID_ROW + GAME_GRID_ROW * SQUARE_MARGIN + SQUARE_MARGIN
+WINDOW_WIDTH = SQUARE_WIDTH * GAME_GRID_COL + GAME_GRID_COL * SQUARE_MARGIN + SQUARE_MARGIN
 # each square is 20 pixels
 
 BACKGROUND_COLOR = (34, 139, 34)
@@ -41,9 +46,4 @@ FLAG = 2
 SOLIDER = 3
 EMPTY = 0
 
-# This sets the WIDTH and HEIGHT of each grid location
-WIDTH = 20
-HEIGHT = 20
-
-# This sets the margin between each cell
-MARGIN = 1
+bush_locations = []

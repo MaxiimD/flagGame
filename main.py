@@ -14,7 +14,7 @@ state = {
 def main():
     pygame.init()
     game_field.create()
-    screen.draw_game()
+    screen.create_bushes_locations()
     while state["is_window_open"]:
         handle_user_events()
         screen.draw_game()
