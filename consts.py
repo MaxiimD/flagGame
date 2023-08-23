@@ -1,3 +1,5 @@
+from pygame import constants as pygameConst
+
 NUM_OF_BUSHES = 20
 BUSH_IMG = "grass.png"
 BUSH_HEIGHT = 40
@@ -62,3 +64,8 @@ WIN_FONT_SIZE = LOSE_FONT_SIZE
 WIN_COLOR = (89, 89, 89)
 WIN_LOCATION = \
     (0.2 * WINDOW_WIDTH, WINDOW_HEIGHT / 2 - (WIN_FONT_SIZE / 2))
+
+NUMBER_KEYS = (
+    pygameConst.K_1, pygameConst.K_2, pygameConst.K_3, pygameConst.K_4, pygameConst.K_5, pygameConst.K_6,
+    pygameConst.K_7, pygameConst.K_8, pygameConst.K_9)
+MOVEMENT_KEYS = (pygameConst.K_UP, pygameConst.K_DOWN, pygameConst.K_LEFT, pygameConst.K_RIGHT,)

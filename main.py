@@ -4,6 +4,7 @@ import screen
 import game_field
 import soldier
 import time
+import database
 
 state = {
     "is_window_open": True,
@@ -18,7 +19,7 @@ def main():
     pygame.init()
     game_field.create()
     screen.create_bushes_locations()
-    screen.draw_game(state)
+    database.init()
     while state["is_window_open"]:
         handle_user_events()
         if state["is_player_moving"]:
@@ -35,14 +36,21 @@ def main():
 
 
 def handle_user_events():
+    global t
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             state["is_window_open"] = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 state["is_in_grid_view"] = True
-            else:
+            if event.key in consts.NUMBER_KEYS:
+                t = time.time()
+            if event.key in consts.MOVEMENT_KEYS:
                 state["is_player_moving"] = True
+        if event.type == pygame.KEYUP:
+            if event.key in consts.NUMBER_KEYS:
+                time_elapsed = time.time() - t
+                print(time_elapsed)
 
 
 # def print_mat(mat: list):
