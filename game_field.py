@@ -16,8 +16,8 @@ def create():
 def create_mines():
     for i in range(consts.NUM_OF_MINES):
         while True:
-            x = random.randint(0, consts.GAME_GRID_COL - consts.MINE_WIDTH)
-            y = random.randint(0, consts.GAME_GRID_ROW - consts.MINE_WIDTH)
+            x = random.randint(consts.SOLDIER_HEIGHT-1, consts.GAME_GRID_COL - consts.MINE_WIDTH)
+            y = random.randint(consts.SOLDIER_HEIGHT-1, consts.GAME_GRID_ROW - consts.MINE_WIDTH)
             if game_grid[y][x:x + consts.MINE_WIDTH].count(consts.EMPTY) == consts.MINE_WIDTH:
                 consts.mine_locations.append((x, y))
                 break

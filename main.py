@@ -19,7 +19,7 @@ def main():
     game_field.create()
     screen.create_bushes_locations()
     screen.draw_game(state)
-    while state["is_window_open"] and state["state"] == consts.RUNNING_STATE:
+    while state["is_window_open"]:
         handle_user_events()
         if state["is_player_moving"]:
             move_soldier()
@@ -28,7 +28,7 @@ def main():
                 state["state"] = consts.LOSE_STATE
             elif soldier.is_on_flag():
                 state["state"] = consts.WIN_STATE
-        if state["is_in_grid_view"]:
+        elif state["is_in_grid_view"]:
             grid_view()
             state["is_in_grid_view"] = False
         screen.draw_game(state)
@@ -60,17 +60,17 @@ def grid_view():
 def move_soldier():
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        if not soldier.location[0] - 1 < 0:
-            soldier.location[0] -= 1
+        if not soldier.location[0] - consts.SOLDIER_STEP < 0:
+            soldier.location[0] -= consts.SOLDIER_STEP
     elif keys[pygame.K_RIGHT]:
-        if not soldier.location[0] + 1 > consts.GAME_GRID_COL - 2:
-            soldier.location[0] += 1
+        if not soldier.location[0] + consts.SOLDIER_STEP > consts.GAME_GRID_COL - consts.SOLDIER_WIDTH:
+            soldier.location[0] += consts.SOLDIER_STEP
     elif keys[pygame.K_UP]:
-        if not soldier.location[1] - 1 < 0:
-            soldier.location[1] -= 1
+        if not soldier.location[1] - consts.SOLDIER_STEP < 0:
+            soldier.location[1] -= consts.SOLDIER_STEP
     elif keys[pygame.K_DOWN]:
-        if not soldier.location[1] + 1 > consts.GAME_GRID_ROW - consts.SOLDIER_HEIGHT:
-            soldier.location[1] += 1
+        if not soldier.location[1] + consts.SOLDIER_STEP > consts.GAME_GRID_ROW - consts.SOLDIER_HEIGHT:
+            soldier.location[1] += consts.SOLDIER_STEP
 
 
 # Press the green button in the gutter to run the script.
