@@ -11,12 +11,6 @@ screen = pygame.display.set_mode(
 
 
 def draw_game(game_state):
-    if game_state["state"] == consts.RUNNING_STATE:
-        screen.fill(consts.BACKGROUND_COLOR)
-        draw_bushes()
-        draw_soldier(consts.SOLDIER_IMG)
-        draw_flag()
-        pygame.display.flip()
     if game_state["state"] == consts.LOSE_STATE:
         visualize_grid()
         draw_lose_message()
@@ -28,6 +22,13 @@ def draw_game(game_state):
         pygame.display.flip()
         time.sleep(3)
         quit()
+    else:
+        screen.fill(consts.BACKGROUND_COLOR)
+        draw_bushes()
+        draw_soldier(consts.SOLDIER_IMG)
+        draw_flag()
+        pygame.display.flip()
+
 
 def draw_lose_message():
     draw_message(consts.LOSE_MESSAGE, consts.LOSE_FONT_SIZE,
