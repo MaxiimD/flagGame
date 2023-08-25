@@ -69,3 +69,5 @@ NUMBER_KEYS = (
     pygameConst.K_1, pygameConst.K_2, pygameConst.K_3, pygameConst.K_4, pygameConst.K_5, pygameConst.K_6,
     pygameConst.K_7, pygameConst.K_8, pygameConst.K_9)
 MOVEMENT_KEYS = (pygameConst.K_UP, pygameConst.K_DOWN, pygameConst.K_LEFT, pygameConst.K_RIGHT,)
+
+GRID_VIEW_TIME = 1

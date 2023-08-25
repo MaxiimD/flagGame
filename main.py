@@ -5,6 +5,7 @@ import game_field
 import soldier
 import time
 import database
+import sys
 
 state = {
     "is_window_open": True,
@@ -40,6 +41,9 @@ def handle_user_events():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             state["is_window_open"] = False
+        elif state["state"] != consts.RUNNING_STATE:
+            time.sleep(3)
+            sys.exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 state["is_in_grid_view"] = True
@@ -62,7 +66,7 @@ def handle_user_events():
 
 def grid_view():
     screen.visualize_grid()
-    time.sleep(1)
+    time.sleep(consts.GRID_VIEW_TIME)
 
 
 def move_soldier():
