@@ -1,4 +1,4 @@
-from pygame import constants as pygameConst
+from pygame import constants as pygame_const
 
 NUM_OF_BUSHES = 20
 BUSH_IMG = "grass.png"
@@ -21,11 +21,11 @@ SOLDIER_STEP = 1
 SQUARE_WIDTH = 20
 SQUARE_HEIGHT = 20
 # This sets the margin between each cell(in pixels)
-SQUARE_MARGIN = 1
+SQUARE_BORDER = 1
 SQUARE_COLOR = (0, 100, 0)
 # set the window dimensions based on the squares
-WINDOW_HEIGHT = SQUARE_HEIGHT * GAME_GRID_ROW + GAME_GRID_ROW * SQUARE_MARGIN + SQUARE_MARGIN
-WINDOW_WIDTH = SQUARE_WIDTH * GAME_GRID_COL + GAME_GRID_COL * SQUARE_MARGIN + SQUARE_MARGIN
+WINDOW_HEIGHT = SQUARE_HEIGHT * GAME_GRID_ROW
+WINDOW_WIDTH = SQUARE_WIDTH * GAME_GRID_COL
 
 BACKGROUND_COLOR = (34, 139, 34)
 BACKGROUND_XRAY = (0, 0, 0)
@@ -65,9 +65,20 @@ WIN_COLOR = (89, 89, 89)
 WIN_LOCATION = \
     (0.2 * WINDOW_WIDTH, WINDOW_HEIGHT / 2 - (WIN_FONT_SIZE / 2))
 
-NUMBER_KEYS = (
-    pygameConst.K_1, pygameConst.K_2, pygameConst.K_3, pygameConst.K_4, pygameConst.K_5, pygameConst.K_6,
-    pygameConst.K_7, pygameConst.K_8, pygameConst.K_9)
-MOVEMENT_KEYS = (pygameConst.K_UP, pygameConst.K_DOWN, pygameConst.K_LEFT, pygameConst.K_RIGHT,)
+# Dict containing num_key_const:timestamp_of_press
+NUMBER_KEYS_TIME_DICT = {pygame_const.K_1: None, pygame_const.K_2: None, pygame_const.K_3: None, pygame_const.K_4: None,
+                         pygame_const.K_5: None, pygame_const.K_6: None,
+                         pygame_const.K_7: None, pygame_const.K_8: None, pygame_const.K_9: None}
+
+
+MOVEMENT_KEYS = (pygame_const.K_UP, pygame_const.K_DOWN, pygame_const.K_LEFT, pygame_const.K_RIGHT,)
 
 GRID_VIEW_TIME = 1
+
+SAVE_TIME = 1
+
+WIN_LOSE_MSG_TIME = 3
+
+FPS = 60
+
+

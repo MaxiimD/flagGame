@@ -3,9 +3,7 @@ import pygame
 import screen
 import game_field
 import soldier
-import time
 import database
-import sys
 
 state = {
     "is_window_open": True,
@@ -21,6 +19,7 @@ def main():
     game_field.create()
     screen.create_bushes_locations()
     database.init()
+    clock = pygame.time.Clock()
     while state["is_window_open"]:
         handle_user_events()
         if state["is_player_moving"]:
@@ -34,27 +33,31 @@ def main():
             grid_view()
             state["is_in_grid_view"] = False
         screen.draw_game(state)
+        clock.tick(consts.FPS)
 
 
 def handle_user_events():
-    global t
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             state["is_window_open"] = False
         elif state["state"] != consts.RUNNING_STATE:
-            time.sleep(3)
-            sys.exit()
+            pygame.time.delay(consts.WIN_LOSE_MSG_TIME * 1000)
+            state["is_window_open"] = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 state["is_in_grid_view"] = True
-            if event.key in consts.NUMBER_KEYS:
-                t = time.time()
+            if event.key in consts.NUMBER_KEYS_TIME_DICT:
+                consts.NUMBER_KEYS_TIME_DICT[event.key] = pygame.time.get_ticks()
             if event.key in consts.MOVEMENT_KEYS:
                 state["is_player_moving"] = True
         if event.type == pygame.KEYUP:
-            if event.key in consts.NUMBER_KEYS:
-                time_elapsed = time.time() - t
-                print(time_elapsed)
+            if event.key in consts.NUMBER_KEYS_TIME_DICT:
+                consts.NUMBER_KEYS_TIME_DICT[event.key] = pygame.time.get_ticks() - consts.NUMBER_KEYS_TIME_DICT[
+                    event.key]
+                if consts.NUMBER_KEYS_TIME_DICT[event.key] > consts.SAVE_TIME * 1000:
+                    database.save(event.key)
+                else:
+                    load_game(event.key)
 
 
 # def print_mat(mat: list):
@@ -66,7 +69,7 @@ def handle_user_events():
 
 def grid_view():
     screen.visualize_grid()
-    time.sleep(consts.GRID_VIEW_TIME)
+    pygame.time.delay(consts.GRID_VIEW_TIME * 1000)
 
 
 def move_soldier():
@@ -83,6 +86,11 @@ def move_soldier():
     elif keys[pygame.K_DOWN]:
         if not soldier.location[1] + consts.SOLDIER_STEP > consts.GAME_GRID_ROW - consts.SOLDIER_HEIGHT:
             soldier.location[1] += consts.SOLDIER_STEP
+
+
+def load_game(key):
+    database.load(key)
+    game_field.load_from_db()
 
 
 # Press the green button in the gutter to run the script.

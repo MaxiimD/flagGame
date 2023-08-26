@@ -1,6 +1,5 @@
 import consts
 import game_field
-from pygame import constants
 
 location = consts.SOLDIER_START_LOCATION
 

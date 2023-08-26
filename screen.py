@@ -2,9 +2,6 @@ import random
 import consts
 import pygame
 import soldier
-import time
-
-import game_field
 
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
@@ -59,8 +56,8 @@ def draw_soldier(img):
     sized_soldier = pygame.transform.scale(soldier_img, (
         consts.SQUARE_WIDTH * consts.SOLDIER_WIDTH, consts.SQUARE_HEIGHT * consts.SOLDIER_HEIGHT))
     screen.blit(sized_soldier,
-                ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * soldier.location[0] + consts.SQUARE_MARGIN,
-                 (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * soldier.location[1] + consts.SQUARE_MARGIN))
+                (consts.SQUARE_WIDTH * soldier.location[0],
+                 consts.SQUARE_HEIGHT * soldier.location[1]))
 
 
 def draw_flag():
@@ -77,18 +74,18 @@ def draw_mines():
         consts.SQUARE_WIDTH * consts.MINE_WIDTH, consts.SQUARE_HEIGHT * consts.MINE_HEIGHT))
     for location in consts.mine_locations:
         screen.blit(sized_mine,
-                    ((consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * location[0] + consts.SQUARE_MARGIN,
-                     (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * location[1] + consts.SQUARE_MARGIN))
+                    (consts.SQUARE_WIDTH * location[0],
+                     consts.SQUARE_HEIGHT * location[1]))
 
 
 def visualize_grid():
-    screen.fill(consts.SQUARE_COLOR)
+    screen.fill(consts.BACKGROUND_XRAY)
     for row in range(consts.GAME_GRID_ROW):
         for column in range(consts.GAME_GRID_COL):
-            pygame.draw.rect(screen, consts.BACKGROUND_XRAY,
-                             [(consts.SQUARE_MARGIN + consts.SQUARE_WIDTH) * column + consts.SQUARE_MARGIN,
-                              (consts.SQUARE_MARGIN + consts.SQUARE_HEIGHT) * row + consts.SQUARE_MARGIN,
-                              consts.SQUARE_WIDTH, consts.SQUARE_HEIGHT])
+            pygame.draw.rect(screen, consts.SQUARE_COLOR,
+                             [consts.SQUARE_WIDTH * column,
+                              consts.SQUARE_HEIGHT * row,
+                              consts.SQUARE_WIDTH, consts.SQUARE_HEIGHT], consts.SQUARE_BORDER)
     draw_mines()
     draw_soldier(consts.SOLDIER_IMG_XRAY)
     pygame.display.flip()
