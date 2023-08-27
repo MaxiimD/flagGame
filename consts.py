@@ -45,10 +45,8 @@ WIN_STATE = 3
 
 MINE = 1
 FLAG = 2
-SOLIDER = 3
-GUARD = 4
 EMPTY = 0
-TELEPORT = 5
+TELEPORT = 3
 
 # saves the bush x,y cords
 bush_locations = []
@@ -91,3 +89,7 @@ RIGHT = 'R'
 LEFT = 'L'
 
 DB_COL = ['Mines', 'Bushes', 'Soldier', 'Guard']
+
+TELEPORT_IMAGE = 'teleport.png'
+TELEPORT_NUM = 5
+TELEPORT_LOCATIONS = []

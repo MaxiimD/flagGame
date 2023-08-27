@@ -1,6 +1,5 @@
 import consts
 import random
-import guard
 import soldier
 
 game_grid = []
@@ -10,6 +9,7 @@ def create():
     create_empty_matrix()
     create_flag()
     create_mines()
+    create_teleport()
 
 
 def create_mines():
@@ -55,3 +55,23 @@ def remove_mines():
 def load_from_db():
     remove_mines()
     put_mines_in_grid()
+
+
+def create_teleport():
+    soldier_location = soldier.soldier_body_locations()
+    for i in range(consts.TELEPORT_NUM):
+        while True:
+            col = random.randint(4, consts.GAME_GRID_COL - consts.MINE_WIDTH)
+            row = random.randint(consts.SOLDIER_HEIGHT - 1, consts.GAME_GRID_ROW - consts.MINE_WIDTH)
+            if (game_grid[row][col:col + consts.MINE_WIDTH].count(consts.EMPTY) == consts.MINE_WIDTH
+                    and not (row, col) in soldier_location):
+                consts.TELEPORT_LOCATIONS.append((col, row))
+                break
+        for j in range(consts.MINE_WIDTH):
+            game_grid[row][col + j] = consts.TELEPORT
+
+
+def put_teleport_in_grid():
+    for location in consts.TELEPORT_LOCATIONS:
+        for j in range(consts.MINE_WIDTH):
+            game_grid[location[1]][location[0] + j] = consts.TELEPORT

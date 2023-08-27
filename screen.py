@@ -13,6 +13,7 @@ def draw_game(game_state):
     draw_bushes()
     draw_soldier(consts.SOLDIER_IMG)
     draw_flag()
+    draw_teleport()
     draw_guard(guard.GUARD_IMG)
     if game_state["state"] == consts.LOSE_STATE:
         visualize_grid()
@@ -102,3 +103,13 @@ def visualize_grid():
     draw_mines()
     draw_soldier(consts.SOLDIER_IMG_XRAY)
     pygame.display.flip()
+
+
+def draw_teleport():
+    teleport = pygame.image.load(consts.TELEPORT_IMAGE)
+    sized_teleport = pygame.transform.scale(teleport, (
+        consts.SQUARE_WIDTH * consts.MINE_WIDTH, consts.SQUARE_HEIGHT * consts.MINE_HEIGHT))
+    for location in consts.TELEPORT_LOCATIONS:
+        screen.blit(sized_teleport,
+                    (consts.SQUARE_WIDTH * location[0],
+                     consts.SQUARE_HEIGHT * location[1]))
