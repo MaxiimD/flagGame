@@ -48,6 +48,7 @@ FLAG = 2
 SOLIDER = 3
 GUARD = 4
 EMPTY = 0
+TELEPORT = 5
 
 # saves the bush x,y cords
 bush_locations = []
