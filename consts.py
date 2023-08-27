@@ -46,6 +46,7 @@ WIN_STATE = 3
 MINE = 1
 FLAG = 2
 SOLIDER = 3
+GUARD = 4
 EMPTY = 0
 
 # saves the bush x,y cords
@@ -70,7 +71,6 @@ NUMBER_KEYS_TIME_DICT = {pygame_const.K_1: None, pygame_const.K_2: None, pygame_
                          pygame_const.K_5: None, pygame_const.K_6: None,
                          pygame_const.K_7: None, pygame_const.K_8: None, pygame_const.K_9: None}
 
-
 MOVEMENT_KEYS = (pygame_const.K_UP, pygame_const.K_DOWN, pygame_const.K_LEFT, pygame_const.K_RIGHT,)
 
 GRID_VIEW_TIME = 1
@@ -81,4 +81,12 @@ WIN_LOSE_MSG_TIME = 3
 
 FPS = 60
 
+GUARD_HEIGHT = 4
+GUARD_WIDTH = 2
+GUARD_STARTING_LOCATION = [0, int((GAME_GRID_ROW-1)/2)]
+GUARD_MOVE_INTERVAL = 100  # in ms
 
+RIGHT = 'R'
+LEFT = 'L'
+
+DB_COL = ['Mines', 'Bushes', 'Soldier', 'Guard']

@@ -1,22 +1,25 @@
 import consts
 import random
+import guard
+import soldier
 
 game_grid = []
 
 
 def create():
     create_empty_matrix()
-    create_player()
     create_flag()
     create_mines()
 
 
 def create_mines():
+    soldier_location = soldier.soldier_body_locations()
     for i in range(consts.NUM_OF_MINES):
         while True:
             col = random.randint(0, consts.GAME_GRID_COL - consts.MINE_WIDTH)
-            row = random.randint(consts.SOLDIER_HEIGHT - 1, consts.GAME_GRID_ROW - consts.MINE_WIDTH)
-            if game_grid[row][col:col + consts.MINE_WIDTH].count(consts.EMPTY) == consts.MINE_WIDTH:
+            row = random.randint(consts.SOLDIER_HEIGHT - 1, consts.GAME_GRID_ROW - 1)
+            if (game_grid[row][col:col + consts.MINE_WIDTH].count(consts.EMPTY) == consts.MINE_WIDTH
+                    and not game_grid[row][col] in soldier_location):
                 consts.mine_locations.append((col, row))
                 break
         for j in range(consts.MINE_WIDTH):
@@ -34,12 +37,6 @@ def create_flag():
         for j in range(consts.FLAG_WIDTH):
             game_grid[consts.GAME_GRID_ROW - consts.FLAG_HEIGHT + i][
                 consts.GAME_GRID_COL - consts.FLAG_WIDTH + j] = consts.FLAG
-
-
-def create_player():
-    for i in range(consts.SOLDIER_HEIGHT):
-        for j in range(consts.SOLDIER_WIDTH):
-            game_grid[i][j] = consts.SOLIDER
 
 
 def create_empty_matrix():

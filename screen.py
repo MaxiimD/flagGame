@@ -2,6 +2,7 @@ import random
 import consts
 import pygame
 import soldier
+import guard
 
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
@@ -12,6 +13,7 @@ def draw_game(game_state):
     draw_bushes()
     draw_soldier(consts.SOLDIER_IMG)
     draw_flag()
+    draw_guard(guard.GUARD_IMG)
     if game_state["state"] == consts.LOSE_STATE:
         visualize_grid()
         draw_lose_message()
@@ -58,6 +60,17 @@ def draw_soldier(img):
     screen.blit(sized_soldier,
                 (consts.SQUARE_WIDTH * soldier.location[0],
                  consts.SQUARE_HEIGHT * soldier.location[1]))
+
+
+def draw_guard(img):
+    guard_img = pygame.image.load(img)
+    sized_guard = pygame.transform.scale(guard_img, (
+        consts.SQUARE_WIDTH * consts.GUARD_WIDTH, consts.SQUARE_HEIGHT * consts.GUARD_HEIGHT))
+    if guard.direction == 'L':
+        sized_guard = pygame.transform.flip(sized_guard, True, False)
+    screen.blit(sized_guard,
+                (consts.SQUARE_WIDTH * guard.location[0],
+                 consts.SQUARE_HEIGHT * guard.location[1]))
 
 
 def draw_flag():

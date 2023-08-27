@@ -1,5 +1,7 @@
 import consts
 import pygame
+
+import guard
 import screen
 import game_field
 import soldier
@@ -20,6 +22,8 @@ def main():
     screen.create_bushes_locations()
     database.init()
     clock = pygame.time.Clock()
+    # print_mat(game_field.game_grid)
+    pygame.time.set_timer(pygame.USEREVENT, 100)
     while state["is_window_open"]:
         handle_user_events()
         if state["is_player_moving"]:
@@ -30,8 +34,12 @@ def main():
             elif soldier.is_on_flag():
                 state["state"] = consts.WIN_STATE
         elif state["is_in_grid_view"]:
+            pygame.time.set_timer(pygame.USEREVENT, 0)
             grid_view()
+            pygame.time.set_timer(pygame.USEREVENT, 100)
             state["is_in_grid_view"] = False
+        if guard.is_colliding_with_soldier():
+            state["state"] = consts.LOSE_STATE
         screen.draw_game(state)
         clock.tick(consts.FPS)
 
@@ -43,6 +51,8 @@ def handle_user_events():
         elif state["state"] != consts.RUNNING_STATE:
             pygame.time.delay(consts.WIN_LOSE_MSG_TIME * 1000)
             state["is_window_open"] = False
+        if event.type == pygame.USEREVENT:
+            guard.move()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 state["is_in_grid_view"] = True
@@ -60,11 +70,11 @@ def handle_user_events():
                     load_game(event.key)
 
 
-# def print_mat(mat: list):
-#     for row in range(len(mat)):
-#         for col in range(len(mat[row])):
-#             print(mat[row][col], end=' ')
-#         print()
+def print_mat(mat: list):
+    for row in range(len(mat)):
+        for col in range(len(mat[row])):
+            print(mat[row][col], end=' ')
+        print()
 
 
 def grid_view():
