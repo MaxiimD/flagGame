@@ -20,7 +20,7 @@ def create_mines():
 
 def create_flag():
     put_in_grid((consts.GAME_GRID_COL - consts.FLAG_WIDTH, consts.GAME_GRID_ROW - consts.FLAG_HEIGHT),
-                consts.FLAG_WIDTH, consts.FLAG_HEIGHT, consts.EMPTY)
+                consts.FLAG_WIDTH, consts.FLAG_HEIGHT, consts.FLAG)
 
 
 def create_teleport():
