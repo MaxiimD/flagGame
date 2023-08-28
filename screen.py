@@ -31,9 +31,9 @@ def draw_object(img: str, width: int, height: int, location: tuple[int], directi
     This func draws an object on screen
     :param direction:
     :param img:
-    :param width:
-    :param height:
-    :param location:
+    :param width: int representing grid cols
+    :param height: int representing grid rows
+    :param location: tuple with x y cords
     """
     img = pygame.image.load(img)
     sized_img = pygame.transform.scale(img, (
@@ -78,11 +78,11 @@ def draw_bushes():
 
 
 def draw_soldier(img):
-    draw_object(img, consts.SOLDIER_WIDTH, consts.SOLDIER_HEIGHT, calc_pixels(soldier.location))
+    draw_object(img, consts.SOLDIER_WIDTH, consts.SOLDIER_HEIGHT, calc_location(soldier.location))
 
 
 def draw_guard(img):
-    draw_object(img, consts.GUARD_WIDTH, consts.GUARD_HEIGHT, calc_pixels(guard.location),guard.direction)
+    draw_object(img, consts.GUARD_WIDTH, consts.GUARD_HEIGHT, calc_location(guard.location), guard.direction)
 
 
 def draw_flag():
@@ -91,12 +91,12 @@ def draw_flag():
 
 def draw_mines():
     for location in consts.mine_locations:
-        draw_object(consts.MINE_IMG, consts.MINE_WIDTH, consts.MINE_HEIGHT, calc_pixels(location))
+        draw_object(consts.MINE_IMG, consts.MINE_WIDTH, consts.MINE_HEIGHT, calc_location(location))
 
 
 def draw_teleport():
     for location in consts.TELEPORT_LOCATIONS:
-        draw_object(consts.TELEPORT_IMAGE, consts.TELEPORT_WIDTH, consts.TELEPORT_HEIGHT, calc_pixels(location))
+        draw_object(consts.TELEPORT_IMAGE, consts.TELEPORT_WIDTH, consts.TELEPORT_HEIGHT, calc_location(location))
 
 
 def visualize_grid():
@@ -113,7 +113,7 @@ def visualize_grid():
     pygame.display.flip()
 
 
-def calc_pixels(grid_location: Union[tuple[int], list[int]]) -> tuple:
+def calc_location(grid_location: Union[tuple[int], list[int]]) -> tuple:
     x = grid_location[0] * consts.SQUARE_WIDTH
     y = grid_location[1] * consts.SQUARE_WIDTH
     return x, y
