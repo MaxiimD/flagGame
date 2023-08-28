@@ -1,6 +1,7 @@
 import consts
 import soldier
 
+
 location = consts.GUARD_STARTING_LOCATION
 direction = consts.RIGHT
 

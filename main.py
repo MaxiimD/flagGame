@@ -21,6 +21,7 @@ def main():
     pygame.init()
     game_field.create()
     screen.create_bushes_locations()
+    screen.load_images()
     database.init()
     clock = pygame.time.Clock()
     pygame.time.set_timer(pygame.USEREVENT, 100)

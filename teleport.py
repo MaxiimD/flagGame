@@ -13,5 +13,9 @@ def is_on_teleport():
 
 
 def teleport():
-    tp = random.choice(consts.TELEPORT_LOCATIONS)
+    feet_locations = soldier.soldier_feet_locations()
+    while True:
+        tp = random.choice(consts.TELEPORT_LOCATIONS)
+        if tp not in feet_locations:
+            break
     soldier.location = [tp[0], tp[1] - consts.SOLDIER_HEIGHT]

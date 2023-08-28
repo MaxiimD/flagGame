@@ -53,9 +53,9 @@ bush_locations = []
 mine_locations = []
 
 FONT_NAME = "Calibri"
-WELCOME_MSG = "Welcome to The Flag game.Have Fun!"
+WELCOME_MSG = "Welcome to The Flag game.\nHave Fun!"
 WELCOME_FONT_SIZE = int(25)
-WELCOME_COLOR = (0, 0, 0)
+WELCOME_COLOR = (255, 255, 255)
 WELCOME_LOCATION = (0, 0)
 LOSE_MESSAGE = "You Lost!"
 LOSE_FONT_SIZE = int(0.15 * WINDOW_WIDTH)

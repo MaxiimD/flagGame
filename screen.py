@@ -1,5 +1,5 @@
 import random
-from typing import Union, Any
+from typing import Union
 
 import consts
 import pygame
@@ -26,7 +26,7 @@ def draw_game(game_state):
     pygame.display.flip()
 
 
-def draw_object(img: str, width: int, height: int, location: tuple[int], direction: str = consts.RIGHT):
+def draw_object(img, width: int, height: int, location: tuple[int], direction: str = consts.RIGHT):
     """
     This func draws an object on screen
     :param direction:
@@ -35,7 +35,6 @@ def draw_object(img: str, width: int, height: int, location: tuple[int], directi
     :param height: int representing grid rows
     :param location: tuple with x y cords
     """
-    img = pygame.image.load(img)
     sized_img = pygame.transform.scale(img, (
         consts.SQUARE_WIDTH * width, consts.SQUARE_HEIGHT * height))
     if direction != consts.RIGHT:
@@ -51,8 +50,10 @@ def draw_message(message, font_size, color, location):
 
 
 def draw_welcome_msg():
-    draw_message(consts.WELCOME_MSG, consts.WELCOME_FONT_SIZE,
+    draw_message(consts.WELCOME_MSG.split("\n")[0], consts.WELCOME_FONT_SIZE,
                  consts.WELCOME_COLOR, consts.WELCOME_LOCATION)
+    draw_message(consts.WELCOME_MSG.split("\n")[1], consts.WELCOME_FONT_SIZE,
+                 consts.WELCOME_COLOR, (consts.WELCOME_LOCATION[0],consts.WELCOME_LOCATION[1]++consts.WELCOME_FONT_SIZE))
 
 
 def draw_lose_message():
@@ -67,8 +68,8 @@ def draw_win_message():
 
 def create_bushes_locations():
     for i in range(consts.NUM_OF_BUSHES):
-        x = random.randint(0, consts.WINDOW_WIDTH - consts.BUSH_WIDTH)
-        y = random.randint(0, consts.WINDOW_HEIGHT - consts.BUSH_HEIGHT)
+        x = random.randint(0, consts.WINDOW_WIDTH - consts.BUSH_WIDTH * consts.SQUARE_WIDTH)
+        y = random.randint(0, consts.WINDOW_HEIGHT - consts.BUSH_HEIGHT * consts.SQUARE_HEIGHT)
         consts.bush_locations.append((x, y))
 
 
@@ -114,6 +115,27 @@ def visualize_grid():
 
 
 def calc_location(grid_location: Union[tuple[int], list[int]]) -> tuple:
+    """
+    gets grid index and translates it to display location
+    :param grid_location:
+    :return:
+    """
     x = grid_location[0] * consts.SQUARE_WIDTH
     y = grid_location[1] * consts.SQUARE_WIDTH
     return x, y
+
+
+def load_images():
+    """
+    implemented this cause my game was lagging... converts all the images to before the game loop starts
+
+    there are better ways to do this but this was only a quick fix
+    """
+    consts.TELEPORT_IMAGE = pygame.image.load(consts.TELEPORT_IMAGE).convert_alpha()
+    consts.GUARD_IMG = pygame.image.load(consts.GUARD_IMG).convert_alpha()
+    consts.GUARD_IMG_NIGHT = pygame.image.load(consts.GUARD_IMG_NIGHT).convert_alpha()
+    consts.FLAG_IMG = pygame.image.load(consts.FLAG_IMG).convert_alpha()
+    consts.SOLDIER_IMG = pygame.image.load(consts.SOLDIER_IMG).convert_alpha()
+    consts.SOLDIER_IMG_NIGHT = pygame.image.load(consts.SOLDIER_IMG_NIGHT).convert_alpha()
+    consts.MINE_IMG = pygame.image.load(consts.MINE_IMG).convert_alpha()
+    consts.BUSH_IMG = pygame.image.load(consts.BUSH_IMG).convert_alpha()
