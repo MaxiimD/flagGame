@@ -1,4 +1,6 @@
 import random
+from typing import Union, Any
+
 import consts
 import pygame
 import soldier
@@ -10,17 +12,47 @@ screen = pygame.display.set_mode(
 
 def draw_game(game_state):
     screen.fill(consts.BACKGROUND_COLOR)
+    draw_welcome_msg()
     draw_bushes()
     draw_soldier(consts.SOLDIER_IMG)
     draw_flag()
     draw_teleport()
-    draw_guard(guard.GUARD_IMG)
+    draw_guard(consts.GUARD_IMG)
     if game_state["state"] == consts.LOSE_STATE:
         visualize_grid()
         draw_lose_message()
     elif game_state["state"] == consts.WIN_STATE:
         draw_win_message()
     pygame.display.flip()
+
+
+def draw_object(img: str, width: int, height: int, location: tuple[int], direction: str = consts.RIGHT):
+    """
+    This func draws an object on screen
+    :param direction:
+    :param img:
+    :param width:
+    :param height:
+    :param location:
+    """
+    img = pygame.image.load(img)
+    sized_img = pygame.transform.scale(img, (
+        consts.SQUARE_WIDTH * width, consts.SQUARE_HEIGHT * height))
+    if direction != consts.RIGHT:
+        sized_img = pygame.transform.flip(sized_img, True, False)
+    screen.blit(sized_img,
+                (location[0], location[1]))
+
+
+def draw_message(message, font_size, color, location):
+    font = pygame.font.SysFont(consts.FONT_NAME, font_size)
+    text_img = font.render(message, True, color)
+    screen.blit(text_img, location)
+
+
+def draw_welcome_msg():
+    draw_message(consts.WELCOME_MSG, consts.WELCOME_FONT_SIZE,
+                 consts.WELCOME_COLOR, consts.WELCOME_LOCATION)
 
 
 def draw_lose_message():
@@ -33,12 +65,6 @@ def draw_win_message():
                  consts.WIN_COLOR, consts.WIN_LOCATION)
 
 
-def draw_message(message, font_size, color, location):
-    font = pygame.font.SysFont(consts.FONT_NAME, font_size)
-    text_img = font.render(message, True, color)
-    screen.blit(text_img, location)
-
-
 def create_bushes_locations():
     for i in range(consts.NUM_OF_BUSHES):
         x = random.randint(0, consts.WINDOW_WIDTH - consts.BUSH_WIDTH)
@@ -47,49 +73,30 @@ def create_bushes_locations():
 
 
 def draw_bushes():
-    bush = pygame.image.load(consts.BUSH_IMG)
-    sized_bush = pygame.transform.scale(bush, (
-        consts.BUSH_WIDTH, consts.BUSH_HEIGHT))
-    for bush in consts.bush_locations:
-        screen.blit(sized_bush, bush)
+    for location in consts.bush_locations:
+        draw_object(consts.BUSH_IMG, consts.BUSH_WIDTH, consts.BUSH_HEIGHT, location)
 
 
 def draw_soldier(img):
-    soldier_img = pygame.image.load(img)
-    sized_soldier = pygame.transform.scale(soldier_img, (
-        consts.SQUARE_WIDTH * consts.SOLDIER_WIDTH, consts.SQUARE_HEIGHT * consts.SOLDIER_HEIGHT))
-    screen.blit(sized_soldier,
-                (consts.SQUARE_WIDTH * soldier.location[0],
-                 consts.SQUARE_HEIGHT * soldier.location[1]))
+    draw_object(img, consts.SOLDIER_WIDTH, consts.SOLDIER_HEIGHT, calc_pixels(soldier.location))
 
 
 def draw_guard(img):
-    guard_img = pygame.image.load(img)
-    sized_guard = pygame.transform.scale(guard_img, (
-        consts.SQUARE_WIDTH * consts.GUARD_WIDTH, consts.SQUARE_HEIGHT * consts.GUARD_HEIGHT))
-    if guard.direction == 'L':
-        sized_guard = pygame.transform.flip(sized_guard, True, False)
-    screen.blit(sized_guard,
-                (consts.SQUARE_WIDTH * guard.location[0],
-                 consts.SQUARE_HEIGHT * guard.location[1]))
+    draw_object(img, consts.GUARD_WIDTH, consts.GUARD_HEIGHT, calc_pixels(guard.location),guard.direction)
 
 
 def draw_flag():
-    flag_img = pygame.image.load(consts.FLAG_IMG)
-    sized_flag = pygame.transform.scale(flag_img, (
-        consts.SQUARE_WIDTH * consts.FLAG_WIDTH, consts.SQUARE_HEIGHT * consts.FLAG_HEIGHT))
-    screen.blit(sized_flag,
-                ((consts.WINDOW_WIDTH - sized_flag.get_width()), (consts.WINDOW_HEIGHT - sized_flag.get_height())))
+    draw_object(consts.FLAG_IMG, consts.FLAG_WIDTH, consts.FLAG_HEIGHT, consts.FLAG_LOCATION)
 
 
 def draw_mines():
-    mine = pygame.image.load(consts.MINE_IMG)
-    sized_mine = pygame.transform.scale(mine, (
-        consts.SQUARE_WIDTH * consts.MINE_WIDTH, consts.SQUARE_HEIGHT * consts.MINE_HEIGHT))
     for location in consts.mine_locations:
-        screen.blit(sized_mine,
-                    (consts.SQUARE_WIDTH * location[0],
-                     consts.SQUARE_HEIGHT * location[1]))
+        draw_object(consts.MINE_IMG, consts.MINE_WIDTH, consts.MINE_HEIGHT, calc_pixels(location))
+
+
+def draw_teleport():
+    for location in consts.TELEPORT_LOCATIONS:
+        draw_object(consts.TELEPORT_IMAGE, consts.TELEPORT_WIDTH, consts.TELEPORT_HEIGHT, calc_pixels(location))
 
 
 def visualize_grid():
@@ -101,15 +108,12 @@ def visualize_grid():
                               consts.SQUARE_HEIGHT * row,
                               consts.SQUARE_WIDTH, consts.SQUARE_HEIGHT], consts.SQUARE_BORDER)
     draw_mines()
-    draw_soldier(consts.SOLDIER_IMG_XRAY)
+    draw_soldier(consts.SOLDIER_IMG_NIGHT)
+    draw_guard(consts.GUARD_IMG_NIGHT)
     pygame.display.flip()
 
 
-def draw_teleport():
-    teleport = pygame.image.load(consts.TELEPORT_IMAGE)
-    sized_teleport = pygame.transform.scale(teleport, (
-        consts.SQUARE_WIDTH * consts.MINE_WIDTH, consts.SQUARE_HEIGHT * consts.MINE_HEIGHT))
-    for location in consts.TELEPORT_LOCATIONS:
-        screen.blit(sized_teleport,
-                    (consts.SQUARE_WIDTH * location[0],
-                     consts.SQUARE_HEIGHT * location[1]))
+def calc_pixels(grid_location: Union[tuple[int], list[int]]) -> tuple:
+    x = grid_location[0] * consts.SQUARE_WIDTH
+    y = grid_location[1] * consts.SQUARE_WIDTH
+    return x, y

@@ -2,10 +2,8 @@ from pygame import constants as pygame_const
 
 NUM_OF_BUSHES = 20
 BUSH_IMG = "grass.png"
-BUSH_HEIGHT = 40
-BUSH_WIDTH = 40
-
-WELCOME_MSG = "wcg"
+BUSH_HEIGHT = 2
+BUSH_WIDTH = 2
 
 GAME_GRID_ROW = 25
 GAME_GRID_COL = 50
@@ -14,7 +12,7 @@ SOLDIER_HEIGHT = 4
 SOLDIER_WIDTH = 2
 SOLDIER_START_LOCATION = [0, 0]
 SOLDIER_IMG = "soldier.png"
-SOLDIER_IMG_XRAY = "soldier_nigth.png"
+SOLDIER_IMG_NIGHT = "soldier_nigth.png"
 SOLDIER_STEP = 1
 
 # This sets the WIDTH and HEIGHT of each grid location (in pixels)
@@ -33,6 +31,7 @@ BACKGROUND_XRAY = (0, 0, 0)
 FLAG_WIDTH = 4
 FLAG_HEIGHT = 3
 FLAG_IMG = "flag.png"
+FLAG_LOCATION = (WINDOW_WIDTH - FLAG_WIDTH * SQUARE_WIDTH, WINDOW_HEIGHT - FLAG_HEIGHT * SQUARE_HEIGHT)
 
 NUM_OF_MINES = 20
 MINE_WIDTH = 3
@@ -54,6 +53,10 @@ bush_locations = []
 mine_locations = []
 
 FONT_NAME = "Calibri"
+WELCOME_MSG = "Welcome to The Flag game.Have Fun!"
+WELCOME_FONT_SIZE = int(25)
+WELCOME_COLOR = (0, 0, 0)
+WELCOME_LOCATION = (0, 0)
 LOSE_MESSAGE = "You Lost!"
 LOSE_FONT_SIZE = int(0.15 * WINDOW_WIDTH)
 LOSE_COLOR = (89, 89, 89)
@@ -82,14 +85,18 @@ FPS = 60
 
 GUARD_HEIGHT = 4
 GUARD_WIDTH = 2
-GUARD_STARTING_LOCATION = [0, int((GAME_GRID_ROW-1)/2)]
+GUARD_IMG = 'guard.png'
+GUARD_IMG_NIGHT = 'guard_night.png'
+GUARD_STARTING_LOCATION = [0, int((GAME_GRID_ROW - 1) / 2)]
 GUARD_MOVE_INTERVAL = 100  # in ms
 
 RIGHT = 'R'
 LEFT = 'L'
 
-DB_COL = ['Mines', 'Bushes', 'Soldier', 'Guard']
+DB_COL = ['Mines', 'Bushes', 'Soldier', 'Guard', 'Teleport']
 
 TELEPORT_IMAGE = 'teleport.png'
 TELEPORT_NUM = 5
 TELEPORT_LOCATIONS = []
+TELEPORT_WIDTH = 3
+TELEPORT_HEIGHT = 1

@@ -16,7 +16,7 @@ def init():
 def save(key):
     df = pd.read_csv('database.csv', header=[0], index_col=[0], dtype='object')
     df.loc[key, consts.DB_COL] = [consts.mine_locations, consts.bush_locations,
-                                  soldier.location, guard.location]
+                                  soldier.location, guard.location, consts.TELEPORT_LOCATIONS]
     with open('database.csv', 'w+') as file:
         df.to_csv(file)
 
@@ -28,3 +28,4 @@ def load(key):
         consts.bush_locations = eval(df.loc[key, 'Bushes'])
         soldier.location = eval(df.loc[key, 'Soldier'])
         guard.location = eval(df.loc[key, 'Guard'])
+        consts.TELEPORT_LOCATIONS = eval(df.loc[key, 'Teleport'])

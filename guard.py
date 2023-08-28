@@ -1,7 +1,6 @@
 import consts
 import soldier
 
-GUARD_IMG = 'guard.png'
 location = consts.GUARD_STARTING_LOCATION
 direction = consts.RIGHT
 

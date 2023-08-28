@@ -5,13 +5,13 @@ import soldier
 
 
 def is_on_teleport():
-    for i in range(consts.SOLDIER_WIDTH):
-        if game_field.game_grid[soldier.location[1] +
-                                consts.SOLDIER_HEIGHT - 1][soldier.location[0] + i] == consts.TELEPORT:
+    feet_locations = soldier.soldier_feet_locations()
+    for f_location in feet_locations:
+        if game_field.game_grid[f_location[0]][f_location[1]] == consts.TELEPORT:
             return True
     return False
 
 
 def teleport():
-    tp = consts.TELEPORT_LOCATIONS[random.randint(0, consts.TELEPORT_NUM-1)]
-    soldier.location = [tp[1] + consts.SOLDIER_HEIGHT, tp[0]]
+    tp = random.choice(consts.TELEPORT_LOCATIONS)
+    soldier.location = [tp[0], tp[1] - consts.SOLDIER_HEIGHT]

@@ -23,7 +23,6 @@ def main():
     screen.create_bushes_locations()
     database.init()
     clock = pygame.time.Clock()
-    # print_mat(game_field.game_grid)
     pygame.time.set_timer(pygame.USEREVENT, 100)
     while state["is_window_open"]:
         handle_user_events()
@@ -73,13 +72,6 @@ def handle_user_events():
                     load_game(event.key)
 
 
-def print_mat(mat: list):
-    for row in range(len(mat)):
-        for col in range(len(mat[row])):
-            print(mat[row][col], end=' ')
-        print()
-
-
 def grid_view():
     screen.visualize_grid()
     pygame.time.delay(consts.GRID_VIEW_TIME * 1000)
@@ -90,13 +82,13 @@ def move_soldier():
     if keys[pygame.K_LEFT]:
         if not soldier.location[0] - consts.SOLDIER_STEP < 0:
             soldier.location[0] -= consts.SOLDIER_STEP
-    elif keys[pygame.K_RIGHT]:
+    if keys[pygame.K_RIGHT]:
         if not soldier.location[0] + consts.SOLDIER_STEP > consts.GAME_GRID_COL - consts.SOLDIER_WIDTH:
             soldier.location[0] += consts.SOLDIER_STEP
-    elif keys[pygame.K_UP]:
+    if keys[pygame.K_UP]:
         if not soldier.location[1] - consts.SOLDIER_STEP < 0:
             soldier.location[1] -= consts.SOLDIER_STEP
-    elif keys[pygame.K_DOWN]:
+    if keys[pygame.K_DOWN]:
         if not soldier.location[1] + consts.SOLDIER_STEP > consts.GAME_GRID_ROW - consts.SOLDIER_HEIGHT:
             soldier.location[1] += consts.SOLDIER_STEP
 
