@@ -95,7 +95,7 @@ def create_object(col_limits: tuple, row_limits: tuple, num_of_object: int, obje
             sub_matrix = [row[col:col + object_width] for row in game_grid[row:row + object_height]]
             if (sum(x.count(consts.EMPTY) for x in sub_matrix) ==
                     object_width * object_height
-                    and not game_grid[row][col] in soldier_location):
+                    and not (col, row) in soldier_location):
                 locations.append((col, row))
                 break
         put_in_grid((col, row), object_width, object_height, val)

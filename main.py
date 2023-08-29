@@ -30,12 +30,12 @@ def main():
         if state["is_player_moving"]:
             move_soldier()
             state["is_player_moving"] = False
+            if teleport.is_on_teleport():
+                teleport.teleport()
             if soldier.is_on_mine():
                 state["state"] = consts.LOSE_STATE
             elif soldier.is_on_flag():
                 state["state"] = consts.WIN_STATE
-            elif teleport.is_on_teleport():
-                teleport.teleport()
         elif state["is_in_grid_view"]:
             pygame.time.set_timer(pygame.USEREVENT, 0)
             grid_view()

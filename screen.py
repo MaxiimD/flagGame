@@ -12,8 +12,8 @@ screen = pygame.display.set_mode(
 
 def draw_game(game_state):
     screen.fill(consts.BACKGROUND_COLOR)
-    draw_welcome_msg()
     draw_bushes()
+    draw_welcome_msg()
     draw_soldier(consts.SOLDIER_IMG)
     draw_flag()
     draw_teleport()
